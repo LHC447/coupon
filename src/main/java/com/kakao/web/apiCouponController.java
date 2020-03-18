@@ -24,18 +24,16 @@ public class apiCouponController {
 	private Coupon create(String email, @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC, size = 5) Pageable pageable) {
 		Coupon checkEmail = couponRepository.findByEmail(email);
 		Page<Coupon> couponPage = couponRepository.findAll(pageable);
-		System.out.println("현재 페이지 글 수:"+couponPage.getNumberOfElements()); 
+		System.out.println("현재 페이지 글 수:"+couponPage.getNumberOfElements());  //다른 페이지인데 왜 계속 5개지..
 		if(checkEmail == null) {
 			
 			if(couponPage.getNumberOfElements() < 5) {
 				String code = coupnum();
 				Coupon coupon = new Coupon(email, code);
-				System.out.println("여기"+couponPage.getNumberOfElements());
 				return couponRepository.save(coupon); 
 			} else {
 				String code = coupnum();
 				Coupon coupon = new Coupon(email, code);
-				System.out.println("왜 여기로 오지"+couponPage.getNumberOfElements());
 				couponRepository.save(coupon); 
 				
 				return null; 
