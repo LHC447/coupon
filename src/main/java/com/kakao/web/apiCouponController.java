@@ -21,7 +21,7 @@ public class apiCouponController {
 	private CouponRepository couponRepository;
 	
 	@PostMapping("")
-	private Coupon create(String email, @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC, size = 5) Pageable pageable) {
+	private Coupon create(String email, @PageableDefault(sort = { "id" }, direction = Sort.Direction.ASC, size = 5) Pageable pageable) {
 		Coupon checkEmail = couponRepository.findByEmail(email);
 		Page<Coupon> couponPage = couponRepository.findAll(pageable);
 		System.out.println("현재 index:"+couponPage.getNumber()); //index가 안바뀌네
