@@ -24,7 +24,8 @@ public class apiCouponController {
 	private Coupon create(String email, @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC, size = 5) Pageable pageable) {
 		Coupon checkEmail = couponRepository.findByEmail(email);
 		Page<Coupon> couponPage = couponRepository.findAll(pageable);
-		System.out.println("현재 페이지 글 수:"+couponPage.getNumberOfElements());  //다른 페이지인데 왜 계속 5개지..
+		System.out.println("현재 index:"+couponPage.getNumber()); //index가 안바뀌네
+		System.out.println("현재 페이지 글 수:"+couponPage.getNumberOfElements());  
 		if(checkEmail == null) {
 			
 			if(couponPage.getNumberOfElements() < 5) {
