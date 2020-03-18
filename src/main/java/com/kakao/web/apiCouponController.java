@@ -3,6 +3,10 @@ package com.kakao.web;
 import java.security.SecureRandom;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,14 +21,28 @@ public class apiCouponController {
 	private CouponRepository couponRepository;
 	
 	@PostMapping("")
-	private Coupon create(String email) {
+	private Coupon create(String email, @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC, size = 5) Pageable pageable) {
 		Coupon checkEmail = couponRepository.findByEmail(email);
-		
+		Page<Coupon> couponPage = couponRepository.findAll(pageable);
+		System.out.println("현재 페이지 글 수:"+couponPage.getNumberOfElements()); 
 		if(checkEmail == null) {
-			String code = coupnum();
-			Coupon coupon = new Coupon(email, code);
-			return couponRepository.save(coupon); 
+			
+			if(couponPage.getNumberOfElements() < 5) {
+				String code = coupnum();
+				Coupon coupon = new Coupon(email, code);
+				System.out.println("여기"+couponPage.getNumberOfElements());
+				return couponRepository.save(coupon); 
+			} else {
+				String code = coupnum();
+				Coupon coupon = new Coupon(email, code);
+				System.out.println("왜 여기로 오지"+couponPage.getNumberOfElements());
+				couponRepository.save(coupon); 
+				
+				return null; 
+			}
+			
 		} else {
+			
 			return null;
 		}
 	}
