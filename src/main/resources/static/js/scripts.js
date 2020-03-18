@@ -27,7 +27,7 @@ function onSuccess(data, status){
 	console.log(data);
 	var couponTemplate = $("#couponTemplate").html();
 	var template = couponTemplate.format(data.id, data.email, data.code, data.formattedCreateDate);
-	$(".coupon-list").append(template);
+	$(".coupon-list").prepend(template);
 	
 }
 

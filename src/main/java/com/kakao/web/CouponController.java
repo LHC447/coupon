@@ -21,15 +21,14 @@ public class CouponController {
 	
 	@GetMapping("/coupons/list")
 	public String coupon(Model model, @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC, size = 5) Pageable pageable) {
-		model.addAttribute("coupons", couponRepository.findAll());
 		
 		Page<Coupon> couponPage = couponRepository.findAll(pageable);
+		
+		model.addAttribute("couponPage", couponPage);
+		
 		System.out.println("총 element 수 :"+ couponPage.getTotalElements()+", 전체 page 수 :"+ couponPage.getTotalPages()
 		+", 페이지에 표시할 element 수 :" +couponPage.getSize() +", 현재 페이지 index :" +couponPage.getNumber()
 		+", 현재 페이지의 element 수 :" +couponPage.getNumberOfElements());
-
-		model.addAttribute("couponPage", couponPage);
-		
 		return "coupon/list";
 	}
 	

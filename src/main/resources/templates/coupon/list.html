@@ -19,7 +19,7 @@
 		<h2 style="padding-left: 1%">관리자 쿠폰 발급</h2>
 		<form class="coupon-create" action="/api/coupons" method="POST">
 			<div class="input-group" style="max-width: 470px; padding-left: 1%">
-				<input type="text" class="form-control" placeholder="E-mail을 입력해주세요"
+				<input type="email" class="form-control" placeholder="E-mail을 입력해주세요"
 					name="email" id="email">
 				<div class="input-group-btn">
 					<button class="btn btn-default btn-primary" type="submit">발급</button>
@@ -38,14 +38,15 @@
 		<div class="col-md text-center">
 			<ul class="pagination center-block" style="display: inline-block;">
 				<li><a href="#">«</a></li>
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
+				<li><a href="list?page=0">1</a></li>
+				<li><a href="list?page=1">2</a></li>
+				<li><a href="list?page=2">3</a></li>
+				<li><a href="list?page=3">4</a></li>
+				<li><a href="list?page=4">5</a></li>
 				<li><a href="#">»</a></li>
 			</ul>
 		</div>
+	
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -55,17 +56,19 @@
 					<th style="padding-left: 1%">Date</th>
 				</tr>
 			</thead>
+
 			<tbody class=coupon-list>
-				{{#coupons}}
+				{{#couponPage}}
 				<tr>
 					<th width="10%" scope="row" style="padding-left: 1%">{{id}}</th>
 					<td width="35%" style="padding-left: 1%">{{email}}</td>
 					<td width="35%" style="padding-left: 1%">{{code}}</td>
 					<td width="20%" style="padding-left: 1%">{{formattedCreateDate}}</td>
 				</tr>
-				{{/coupons}}
+				{{/couponPage}}
 			</tbody>
 		</table>
+	
 	</div>
 
 	<script type="text/template" id="couponTemplate">
